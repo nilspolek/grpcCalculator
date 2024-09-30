@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "./calculatorpb";
+
+package calculator;
+
+service Calculator {
+  rpc Add (CalculationRequest) returns (CalculationResponse) {}
+  rpc Sub (CalculationRequest) returns (CalculationResponse) {}
+  rpc Mul (CalculationRequest) returns (CalculationResponse) {}
+  rpc Div (CalculationRequest) returns (CalculationResponse) {}
+}
+
+message CalculationRequest {
+  int64 lhs = 1;
+  int64 rhs = 2;
+}
+
+message CalculationResponse {
+  int64 result = 1;
+}
