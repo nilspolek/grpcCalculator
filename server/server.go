@@ -11,6 +11,7 @@ import (
 
 type Server struct {
 	calculatorpb.UnimplementedCalculatorServer
+	Address string
 }
 
 func (s *Server) Add(ctx context.Context, in *calculatorpb.CalculationRequest) (*calculatorpb.CalculationResponse, error) {
@@ -34,7 +35,7 @@ func (s *Server) Div(ctx context.Context, in *calculatorpb.CalculationRequest) (
 }
 
 func (s *Server) Start() error {
-	lis, err := net.Listen("tcp", ":12345")
+	lis, err := net.Listen("tcp", s.Address)
 	if err != nil {
 		return err
 	}
@@ -45,6 +46,7 @@ func (s *Server) Start() error {
 	calculatorpb.RegisterCalculatorServer(grpcServer, s)
 
 	if err := grpcServer.Serve(lis); err != nil {
+
 		return err
 	}
 	return nil
